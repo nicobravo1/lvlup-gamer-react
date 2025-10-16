@@ -1,0 +1,6 @@
+[
+  { "id": 1, "title": "Teclado Mecánico RGB", "price": 34990, "image": "/img/keyboard.png" },
+  { "id": 2, "title": "Mouse Gamer 6 botones", "price": 19990, "image": "/img/mouse.png" },
+  { "id": 3, "title": "Auriculares Surround", "price": 29990, "image": "/img/headset.png" },
+  { "id": 4, "title": "Pad XL Antideslizante", "price": 12990, "image": "/img/mousepad.png" }
+]
