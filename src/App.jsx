@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -42,11 +41,13 @@ export default function App() {
   
   const clearCart = () => setCart([]);
 
+ 
   const total = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
+ 
   const itemCount = cart.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
