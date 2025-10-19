@@ -1,15 +1,20 @@
-import { Link, NavLink } from 'react-router-dom'; 
-
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar({ itemCount }) {
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
-      <div className="container">
-       
-        <Link className="navbar-brand fw-semibold" to="/">LvlUp Gamer</Link>
+      {/* Cambié container por container-fluid para ancho completo */}
+      <div className="container-fluid">
+        <Link className="navbar-brand fw-semibold" to="/">
+          LvlUp Gamer
+        </Link>
 
-        
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#nav"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
 
@@ -28,7 +33,6 @@ export default function Navbar({ itemCount }) {
               <NavLink className="nav-link" to="/cart">
                 <i className="bi bi-cart3 me-1"></i>
                 Carrito
-                
                 {itemCount > 0 && (
                   <span
                     className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -39,15 +43,6 @@ export default function Navbar({ itemCount }) {
                 )}
               </NavLink>
             </li>
-            
-            
-            {/* <NavLink className="nav-link" to="/">Inicio</NavLink> */}
-            {/* </li> */}
-
-            {/* Más secciones cuando las creemos:
-            <li className="nav-item"><NavLink className="nav-link" to="/cart">Carrito</NavLink></li>
-            <li className="nav-item"><NavLink className="nav-link" to="/login">Ingresar</NavLink></li>
-            */}
           </ul>
         </div>
       </div>

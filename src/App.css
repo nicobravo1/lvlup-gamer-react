@@ -1,42 +1,101 @@
+/* ===== ESTRUCTURA GLOBAL ===== */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== BODY ===== */
+body {
+  display: block;
+  background-color: #fff; /* Fondo claro para el sitio */
+  color: #212529;         /* Texto oscuro legible */
+  min-width: 320px;
+  min-height: 100vh;
+  padding-top: 80px; /* Ajusta según la altura del navbar */
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ===== ROOT ===== */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ===== TITULOS ===== */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* ===== GRID DE PRODUCTOS ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== TARJETAS DE PRODUCTO ===== */
+.product-card {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #fff;
   text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ===== IMÁGENES ===== */
+.product-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+/* ===== BOTONES ===== */
+.product-card button {
+  width: 100%;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+/* ===== PRECIOS ===== */
+.product-card p {
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* ===== NAVBAR ===== */
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px;
   }
-  to {
-    transform: rotate(360deg);
+  .product-card {
+    padding: 0.75rem;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .grid {
+    gap: 1rem;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
