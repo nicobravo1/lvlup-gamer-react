@@ -1,6 +1,27 @@
 [
-  { "id": 1, "title": "Teclado Mecánico RGB", "price": 34990, "image": "/img/keyboard.png" },
-  { "id": 2, "title": "Mouse Gamer 6 botones", "price": 19990, "image": "/img/mouse.png" },
-  { "id": 3, "title": "Auriculares Surround", "price": 29990, "image": "/img/headset.png" },
-  { "id": 4, "title": "Pad XL Antideslizante", "price": 12990, "image": "/img/mousepad.png" }
+  { "id": "p1", "name": "Logitech G733 Wireless Headset", "price": 159990, "category": "audio", "img": "/img/headset-g733.jpg", "offer": false },
+  { "id": "p2", "name": "HyperX Cloud Alpha S Headset", "price": 89990, "category": "audio", "img": "/img/headset-hyperx-alpha.jpg", "offer": true },
+  { "id": "p3", "name": "Corsair HS80 RGB Wireless", "price": 129990, "category": "audio", "img": "/img/headset-hs80.jpg", "offer": false },
+  { "id": "p4", "name": "SteelSeries Arctis Nova 7", "price": 159990, "category": "audio", "img": "/img/headset-arctis-nova7.jpg", "offer": true },
+
+  { "id": "p5", "name": "Razer BlackWidow V4 75%", "price": 199990, "category": "teclados", "img": "/img/keyboard-blackwidow.jpg", "offer": true },
+  { "id": "p6", "name": "Logitech G Pro X TKL Lightspeed", "price": 219990, "category": "teclados", "img": "/img/keyboard-pro-x-tkl.jpg", "offer": false },
+  { "id": "p7", "name": "Redragon Kumara K552 RGB", "price": 49990, "category": "teclados", "img": "/img/keyboard-kumara.jpg", "offer": true },
+  { "id": "p8", "name": "Corsair K70 RGB Pro", "price": 189990, "category": "teclados", "img": "/img/keyboard-k70.jpg", "offer": false },
+
+  { "id": "p9", "name": "Razer Basilisk V3 Pro", "price": 129990, "category": "mouses", "img": "/img/mouse-basilisk.jpg", "offer": false },
+  { "id": "p10", "name": "Logitech G502 HERO", "price": 69990, "category": "mouses", "img": "/img/mouse-g502.jpg", "offer": true },
+  { "id": "p11", "name": "Glorious Model O-", "price": 79990, "category": "mouses", "img": "/img/mouse-model-o.jpg", "offer": false },
+  { "id": "p12", "name": "SteelSeries Aerox 5 Wireless", "price": 139990, "category": "mouses", "img": "/img/mouse-aerox5.jpg", "offer": true },
+
+  { "id": "p13", "name": "Razer Firefly V2 Pro RGB Mousepad", "price": 119990, "category": "accesorios", "img": "/img/mousepad-firefly.jpg", "offer": false },
+  { "id": "p14", "name": "SteelSeries QcK XXL", "price": 34990, "category": "accesorios", "img": "/img/mousepad-qck.jpg", "offer": true },
+  { "id": "p15", "name": "Corsair MM700 RGB Extended", "price": 79990, "category": "accesorios", "img": "/img/mousepad-mm700.jpg", "offer": false },
+  { "id": "p16", "name": "Razer Goliathus Chroma", "price": 69990, "category": "accesorios", "img": "/img/mousepad-goliathus.jpg", "offer": true },
+
+  { "id": "p17", "name": "Logitech StreamCam Full HD", "price": 149990, "category": "streaming", "img": "/img/cam-streamcam.jpg", "offer": true },
+  { "id": "p18", "name": "Elgato Wave 3 Microphone", "price": 179990, "category": "streaming", "img": "/img/mic-wave3.jpg", "offer": false },
+  { "id": "p19", "name": "Razer Seiren V2 Pro", "price": 169990, "category": "streaming", "img": "/img/mic-seiren.jpg", "offer": false },
+  { "id": "p20", "name": "Logitech Litra Glow", "price": 89990, "category": "streaming", "img": "/img/luz-litra-glow.jpg", "offer": true }
 ]
+

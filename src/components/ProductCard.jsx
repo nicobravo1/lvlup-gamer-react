@@ -1,37 +1,20 @@
-export default function ProductCard({ id, title, price, image, addToCart }) {
-  
-  const format = (v) =>
-    v.toLocaleString("es-CL", { style: "currency", currency: "CLP" });
+import { useCart } from '../context/CartContext'
 
-  
-  const handleAdd = () => {
-    
-    const product = { id, name: title, price, image };
-    addToCart(product);
-  };
+export default function ProductCard({ id, name, price, img }) {
+  const { add } = useCart()
 
   return (
     <div className="col">
-      <div className="card h-100 shadow-sm">
-        <img
-          src={image}
-          className="card-img-top"
-          alt={title}
-          
-          onError={(e) => {
-            e.currentTarget.src = "/img/placeholder.png";
-          }}
-        />
+      <div className="card h-100">
+        <img src={img || '/img/placeholder.png'} className="card-img-top" alt={name} />
         <div className="card-body d-flex flex-column">
-          <h6 className="card-title mb-2">{title}</h6>
-          <p className="text-muted mb-3">{format(price)}</p>
-          
-         
-          <button className="btn btn-primary mt-auto" onClick={handleAdd}>
+          <h5 className="card-title">{name}</h5>
+          <p className="mt-auto mb-2 fw-bold">${price.toLocaleString('es-CL')}</p>
+          <button className="btn btn-dark" onClick={() => add({ id, name, price }, 1)}>
             Agregar al carrito
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }

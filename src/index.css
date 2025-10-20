@@ -1,15 +1,18 @@
-/* ===== RESETEO GLOBAL ===== */
+/* =========================
+   LVLUP – Estilos Globales
+   ========================= */
+
+/* ---- Reset & base ---- */
 :root {
   font-family: "Segoe UI", Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #212529;
-  background-color: #ffffff;
+  color: #f5f5f5;
+  background-color: #0f0f10;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== REGLAS GENERALES ===== */
 html, body, #root {
   height: 100%;
   width: 100%;
@@ -17,25 +20,28 @@ html, body, #root {
   padding: 0;
 }
 
+/* 🎮 Fondo gamer oscuro */
 body {
-  background-color: #fff;
+  background: linear-gradient(180deg, #0f0f10 0%, #1b1b1d 100%);
+  color: #f5f5f5;
   min-width: 320px;
   min-height: 100vh;
-  display: block; /* 💡 antes era flex, ahora es bloque normal */
 }
 
-/* ===== ENLACES ===== */
+/* ---- Links ---- */
 a {
   font-weight: 500;
-  color: #0d6efd;
+  color: #00b050;
   text-decoration: none;
+  transition: 0.2s ease;
 }
 a:hover {
-  color: #0a58ca;
-  text-decoration: underline;
+  color: #00ff80;
+  text-shadow: 0 0 6px rgba(0, 255, 128, 0.5);
+  text-decoration: none;
 }
 
-/* ===== BOTONES ===== */
+/* ---- Botones ---- */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -46,12 +52,66 @@ button {
   cursor: pointer;
   transition: 0.2s ease;
 }
+button:hover { opacity: 0.92; }
 
-button:hover {
-  opacity: 0.9;
+/* =========================
+   Navbar & Branding
+   ========================= */
+.navbar {
+  font-weight: 500;
+  background-color: #212124 !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.navbar .nav-link {
+  color: #ccc !important;
+  transition: color 0.2s ease;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: #fff !important;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
 }
 
-/* ===== GRID DE PRODUCTOS ===== */
+/* Logo */
+.navbar-brand img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  transition: transform .2s ease;
+}
+.navbar-brand img:hover { transform: scale(1.05); }
+
+/* =========================
+   Cards de productos
+   ========================= */
+.product-card {
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.5);
+}
+
+/* Imagen de card uniforme */
+.card-img-top {
+  height: 200px;
+  object-fit: contain;
+  background: #1c1c1c;
+  border-radius: 6px;
+}
+.object-fit-cover { object-fit: cover; }
+
+/* Badge “Oferta” sobre la imagen */
+.badge.text-bg-danger {
+  background-color: #ff1744 !important;
+  font-size: .75rem;
+  box-shadow: 0 2px 8px rgba(255, 23, 68, 0.5);
+}
+
+/* =========================
+   Grilla de productos
+   ========================= */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -63,34 +123,94 @@ button:hover {
 
 .product-card {
   width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  border: none;
+  border-radius: 12px;
   padding: 1rem;
-  text-align: center;
-  background-color: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-color: #212124;
+  text-align: left;
+  color: #f5f5f5;
 }
 
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* =========================
+   Botones y acciones
+   ========================= */
+.btn,
+.btn-dark,
+.btn-success {
+  border: none;
+  font-weight: 600;
+  color: #fff !important;
+  transition: transform 0.15s ease, background-color 0.15s ease;
 }
 
-.product-card img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  margin-bottom: 1rem;
+/* Verde gamer */
+.btn-success {
+  background-color: #00b050 !important;
+}
+.btn-success:hover {
+  background-color: #009b45 !important;
+  transform: scale(1.03);
 }
 
-/* ===== RESPONSIVE ===== */
+/* Botón oscuro */
+.btn-dark {
+  background-color: #333 !important;
+}
+.btn-dark:hover {
+  background-color: #444 !important;
+  transform: scale(1.03);
+}
+
+/* =========================
+   Tipografía
+   ========================= */
+h2, h3 {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 992px) {
+  .navbar .btn { padding: .5rem .8rem; }
+}
+
 @media (max-width: 768px) {
-  .grid {
-    gap: 1rem;
-  }
+  .grid { gap: 1rem; }
+  .product-card { padding: .85rem; }
+  .card-img-top { height: 170px; }
+}
 
-  .product-card {
-    padding: 0.75rem;
-  }
+/* =========================
+   Footer
+   ========================= */
+footer {
+  background-color: #212124 !important;
+  color: #aaa !important;
+  border-top: 1px solid #2b2b2d;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+/* =========================
+   Buscador
+   ========================= */
+.form-control {
+  background-color: #2a2a2c !important;
+  border: 1px solid #3a3a3d;
+  color: #f5f5f5 !important;
+}
+.form-control::placeholder {
+  color: #aaa;
+}
+.form-control:focus {
+  border-color: #00b050;
+  box-shadow: 0 0 0 0.25rem rgba(0, 176, 80, 0.25);
+}
+
+/* Transición suave global */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
