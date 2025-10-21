@@ -4,11 +4,16 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
     files: [
       { pattern: 'src/**/*.spec.js', watched: false },
-      { pattern: 'src/**/*.spec.jsx', watched: false }
+      { pattern: 'src/**/*.spec.jsx', watched: false },
+      { pattern: 'public/img/**/*', watched: false, included: false, served: true, nocache: true }
     ],
+    proxies: {
+      '/img/': '/base/public/img/'
+    },
     preprocessors: {
       'src/**/*.spec.js': ['esbuild'],
-      'src/**/*.spec.jsx': ['esbuild']
+      'src/**/*.spec.jsx': ['esbuild'],
+      
     },
     esbuild: {
       jsx: 'automatic',

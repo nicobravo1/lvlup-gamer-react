@@ -1,3 +1,4 @@
+// src/pages/Checkout.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
@@ -16,12 +17,12 @@ export default function Checkout() {
     shipping: 'normal'
   })
 
-  const onChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const onChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
 
   const onSubmit = (e) => {
     e.preventDefault()
     if (items.length === 0) return
-
     try {
       Orders.create({
         buyer: form,
@@ -31,8 +32,7 @@ export default function Checkout() {
       })
       clear()
       navigate('/compra-exitosa')
-    } catch (err) {
-      console.error(err)
+    } catch {
       navigate('/compra-fallida')
     }
   }
@@ -47,8 +47,9 @@ export default function Checkout() {
         <h2>Checkout</h2>
         <form className="row g-3" onSubmit={onSubmit}>
           <div className="col-md-6">
-            <label className="form-label">Nombre</label>
+            <label className="form-label" htmlFor="name">Nombre</label>
             <input
+              id="name"
               name="name"
               className="form-control"
               value={form.name}
@@ -57,8 +58,9 @@ export default function Checkout() {
             />
           </div>
           <div className="col-md-6">
-            <label className="form-label">Email</label>
+            <label className="form-label" htmlFor="email">Email</label>
             <input
+              id="email"
               name="email"
               type="email"
               className="form-control"
@@ -68,8 +70,9 @@ export default function Checkout() {
             />
           </div>
           <div className="col-12">
-            <label className="form-label">Dirección</label>
+            <label className="form-label" htmlFor="address">Dirección</label>
             <input
+              id="address"
               name="address"
               className="form-control"
               value={form.address}
@@ -78,8 +81,9 @@ export default function Checkout() {
             />
           </div>
           <div className="col-md-6">
-            <label className="form-label">Tipo de Envío</label>
+            <label className="form-label" htmlFor="shipping">Tipo de Envío</label>
             <select
+              id="shipping"
               name="shipping"
               className="form-select"
               value={form.shipping}
@@ -89,12 +93,9 @@ export default function Checkout() {
               <option value="express">Express (24h)</option>
             </select>
           </div>
-
           <div className="col-12 d-flex justify-content-between align-items-center">
             <h5>Total: ${total.toLocaleString('es-CL')}</h5>
-            <button className="btn btn-dark" type="submit">
-              Confirmar compra
-            </button>
+            <button className="btn btn-dark" type="submit">Confirmar compra</button>
           </div>
         </form>
       </div>
@@ -102,11 +103,8 @@ export default function Checkout() {
       <div className="col-md-5">
         <h4>Resumen</h4>
         <ul className="list-group mb-3">
-          {items.map(i => (
-            <li
-              key={i.id}
-              className="list-group-item d-flex justify-content-between"
-            >
+          {items.map((i) => (
+            <li key={i.id} className="list-group-item d-flex justify-content-between">
               <span>{i.name} × {i.qty}</span>
               <strong>${(i.price * i.qty).toLocaleString('es-CL')}</strong>
             </li>

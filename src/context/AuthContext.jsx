@@ -1,39 +1,42 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+// src/context/AuthContext.jsx
+import { createContext, useContext, useState } from 'react'
 
-const AuthCtx = createContext(null)
+export const AuthContext = createContext(null) // 👈 exportamos el contexto
+const STORAGE_KEY = 'lvlup_user'
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
-
-  // Cargar usuario si existe en localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('lvlup_user')
-    if (saved) setUser(JSON.parse(saved))
-  }, [])
+  // Inicialización SINCRÓNICA desde localStorage para evitar “flicker” de null
+  const [user, setUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      return saved ? JSON.parse(saved) : null
+    } catch {
+      return null
+    }
+  })
 
   const login = (email, password) => {
-    // simulación simple
+    // Simulación simple de login
     const u = { email, name: email.split('@')[0] }
-    localStorage.setItem('lvlup_user', JSON.stringify(u))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(u))
     setUser(u)
   }
 
   const register = (name, email, password) => {
     const u = { name, email }
-    localStorage.setItem('lvlup_user', JSON.stringify(u))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(u))
     setUser(u)
   }
 
   const logout = () => {
-    localStorage.removeItem('lvlup_user')
+    localStorage.removeItem(STORAGE_KEY)
     setUser(null)
   }
 
-  return (
-    <AuthCtx.Provider value={{ user, login, register, logout }}>
-      {children}
-    </AuthCtx.Provider>
-  )
+  const value = { user, login, register, logout }
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-export const useAuth = () => useContext(AuthCtx)
+export function useAuth() {
+  return useContext(AuthContext)
+}
