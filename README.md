@@ -1,16 +1,40 @@
-# React + Vite
+# 🎮 LvlUp Gamer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto desarrollado con **React + Vite**, enfocado en la venta de productos gamer (teclados, audífonos, sillas, periféricos y más).  
+Incluye carrito de compras, checkout, autenticación básica y pruebas automatizadas con **Karma + Jasmine**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologías utilizadas
 
-## React Compiler
+- **React 18**
+- **Vite**
+- **React Router DOM**
+- **Bootstrap 5**
+- **Context API** (manejo de Auth y Cart)
+- **Karma + Jasmine** (testing)
+- **ESBuild** (bundler en los tests)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🧱 Estructura principal
+src/
+├── components/ # Componentes reutilizables (Navbar, ProductCard, etc.)
+├── context/ # Contextos: AuthContext y CartContext
+├── data/ # Datos simulados (products.js, orders.js)
+├── pages/ # Páginas principales (Home, Categories, Checkout)
+├── assets/ # Imágenes y recursos estáticos
+└── main.jsx # Punto de entrada
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+🛒 Funcionalidades
+
+✅ Listado de productos
+✅ Filtrado por categoría y búsqueda
+✅ Carrito de compras persistente
+✅ Página de checkout funcional
+✅ Validación y simulación de orden
+✅ Redirección a compra exitosa o fallida
+✅ Tests automatizados para garantizar funcionamiento
+
+
