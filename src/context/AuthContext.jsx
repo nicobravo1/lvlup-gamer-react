@@ -1,3 +1,4 @@
+// src/context/AuthContext.jsx
 import { createContext, useContext, useEffect, useState } from 'react'
 
 export const AuthContext = createContext(null)
@@ -19,7 +20,7 @@ export function AuthProvider({ children }) {
     setUser(u)
   }
 
-  // Al cargar la app: leer usuario guardado y verificar token llamando a /me
+  // Al cargar la app: intentar recuperar sesión previa llamando a /me
   useEffect(() => {
     const init = async () => {
       try {
@@ -37,7 +38,7 @@ export function AuthProvider({ children }) {
         }
 
         const res = await fetch(`${apiBaseUrl}/me`, {
-          headers: { Authorization: `Bearer ${parsed.token}` }
+          headers: { Authorization: `Bearer ${parsed.token}` },
         })
 
         if (!res.ok) {
@@ -46,7 +47,7 @@ export function AuthProvider({ children }) {
           return
         }
 
-        const profile = await res.json() // { id, email, role }
+        const profile = await res.json()
         saveUser({ ...profile, token: parsed.token })
       } catch (err) {
         console.error('Error inicializando auth:', err)
@@ -59,14 +60,14 @@ export function AuthProvider({ children }) {
     init()
   }, [apiBaseUrl])
 
-  // LOGIN contra tu backend
+  // LOGIN contra backend
   const login = async (email, password) => {
     setAuthError(null)
 
     const res = await fetch(`${apiBaseUrl}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     })
 
     if (!res.ok) {
@@ -80,16 +81,39 @@ export function AuthProvider({ children }) {
     }
 
     const data = await res.json()
-    const { token, user: profile } = data // { token, user: {id,email,role} }
+    const { token, user: profile } = data
 
     const fullUser = { ...profile, token }
     saveUser(fullUser)
     return fullUser
   }
 
-  // Por ahora no usamos register desde el front
-  const register = async () => {
-    throw new Error('Registro no implementado aún')
+  // REGISTER contra backend
+  const register = async (name, email, password) => {
+    setAuthError(null)
+
+    const res = await fetch(`${apiBaseUrl}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
+    })
+
+    if (!res.ok) {
+      let message = 'Error al registrarse'
+      try {
+        const data = await res.json()
+        if (data?.error) message = data.error
+      } catch (_) {}
+      setAuthError(message)
+      throw new Error(message)
+    }
+
+    const data = await res.json()
+    const { token, user: profile } = data
+
+    const fullUser = { ...profile, token }
+    saveUser(fullUser)
+    return fullUser
   }
 
   const logout = () => {
@@ -104,4 +128,5 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   return useContext(AuthContext)
 }
+
 
