@@ -1,19 +1,10 @@
-// src/context/AuthContext.jsx
 import { createContext, useContext, useEffect, useState } from 'react'
-import { supabase } from '../supabase/supabaseClient'
 
 export const AuthContext = createContext(null)
 const STORAGE_KEY = 'lvlup_user'
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      return saved ? JSON.parse(saved) : null
-    } catch {
-      return null
-    }
-  })
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [authError, setAuthError] = useState(null)
 
@@ -28,30 +19,35 @@ export function AuthProvider({ children }) {
     setUser(u)
   }
 
-  // 🔄 Al montar la app, intentar recuperar sesión existente
+  // Al cargar la app: leer usuario guardado y verificar token llamando a /me
   useEffect(() => {
     const init = async () => {
       try {
-        const { data } = await supabase.auth.getSession()
-        const session = data?.session
-        if (!session?.access_token) {
-          saveUser(null)
+        const saved = localStorage.getItem(STORAGE_KEY)
+        if (!saved) {
+          setLoading(false)
           return
         }
 
-        const token = session.access_token
+        const parsed = JSON.parse(saved)
+        if (!parsed?.token) {
+          saveUser(null)
+          setLoading(false)
+          return
+        }
 
         const res = await fetch(`${apiBaseUrl}/me`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${parsed.token}` }
         })
 
         if (!res.ok) {
           saveUser(null)
+          setLoading(false)
           return
         }
 
         const profile = await res.json() // { id, email, role }
-        saveUser({ ...profile, token })
+        saveUser({ ...profile, token: parsed.token })
       } catch (err) {
         console.error('Error inicializando auth:', err)
         saveUser(null)
@@ -63,75 +59,40 @@ export function AuthProvider({ children }) {
     init()
   }, [apiBaseUrl])
 
-  // 🔐 Login con Supabase + backend /me
+  // LOGIN contra tu backend
   const login = async (email, password) => {
     setAuthError(null)
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    })
-
-    if (error) {
-      console.error('Error login Supabase:', error)
-      setAuthError(error.message)
-      throw error
-    }
-
-    const token = data.session.access_token
-
-    const res = await fetch(`${apiBaseUrl}/me`, {
-      headers: { Authorization: `Bearer ${token}` }
+    const res = await fetch(`${apiBaseUrl}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
     })
 
     if (!res.ok) {
-      const text = await res.text()
-      throw new Error('No se pudo obtener el perfil: ' + text)
+      let message = 'Error al iniciar sesión'
+      try {
+        const data = await res.json()
+        if (data?.error) message = data.error
+      } catch (_) {}
+      setAuthError(message)
+      throw new Error(message)
     }
 
-    const profile = await res.json()
-    const fullUser = { ...profile, token } // {id,email,role,token}
+    const data = await res.json()
+    const { token, user: profile } = data // { token, user: {id,email,role} }
+
+    const fullUser = { ...profile, token }
     saveUser(fullUser)
     return fullUser
   }
 
-  // 🆕 Registro de usuario (rol cliente)
-  const register = async (name, email, password) => {
-    setAuthError(null)
-
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password
-    })
-
-    if (error) {
-      console.error('Error registro Supabase:', error)
-      setAuthError(error.message)
-      throw error
-    }
-
-    const newUser = data.user
-    if (newUser) {
-      // Creamos el perfil en la tabla profiles con rol "cliente"
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: newUser.id,
-          email,
-          role: 'cliente'
-        })
-
-      if (profileError) {
-        console.error('Error creando perfil:', profileError)
-      }
-    }
-
-    // Después del registro, hacemos login automático
-    return login(email, password)
+  // Por ahora no usamos register desde el front
+  const register = async () => {
+    throw new Error('Registro no implementado aún')
   }
 
-  const logout = async () => {
-    await supabase.auth.signOut()
+  const logout = () => {
     saveUser(null)
   }
 
