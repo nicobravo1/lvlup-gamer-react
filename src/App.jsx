@@ -47,6 +47,7 @@ export default function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/contacto" element={<Contacto />} />
 
+
             {/* Autenticación */}
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />

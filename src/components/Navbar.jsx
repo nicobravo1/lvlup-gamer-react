@@ -81,7 +81,8 @@ export default function Navbar() {
               <NavLink className="nav-link" to="/blog">Blog</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/contacto">Contacto</NavLink>
+              <Link to="/contacto">Contacto</Link>
+
             </li>
 
             {/* 🔧 Admin (solo si es admin) */}

@@ -1,20 +1,37 @@
-import { useCart } from '../context/CartContext'
+import { useState } from "react";
+import ProductModal from "./ProductModal";
 
 export default function ProductCard({ id, name, price, img }) {
-  const { add } = useCart()
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="col">
-      <div className="card h-100">
-        <img src={img || '/img/placeholder.png'} className="card-img-top" alt={name} />
-        <div className="card-body d-flex flex-column">
-          <h5 className="card-title">{name}</h5>
-          <p className="mt-auto mb-2 fw-bold">${price.toLocaleString('es-CL')}</p>
-          <button className="btn btn-dark" onClick={() => add({ id, name, price }, 1)}>
-            Agregar al carrito
-          </button>
+    <>
+      <div className="col">
+        <div className="card h-100 product-card-hover">
+
+          <img
+            src={img}
+            className="card-img-top product-img"
+            alt={name}
+            onClick={() => setIsOpen(true)}
+            style={{ cursor: "pointer" }}
+          />
+
+          <div className="card-body text-center">
+            <h5>{name}</h5>
+            <p className="fw-bold fs-5">${price.toLocaleString("es-CL")}</p>
+          </div>
         </div>
       </div>
-    </div>
-  )
+
+      {isOpen && (
+        <ProductModal
+          product={{ id, name, price, img }}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
+    </>
+  );
 }
+
