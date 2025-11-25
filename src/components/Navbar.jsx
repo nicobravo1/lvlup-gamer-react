@@ -10,8 +10,9 @@ export default function Navbar() {
   const { user, logout } = useAuth()
   const [q, setQ] = useState('')
 
-  // 🔐 misma regla que en RequireAdmin
-  const isAdmin = !!user && user.email?.toLowerCase().endsWith('@demo.cl')
+  
+  const isAdmin = user?.role === 'admin'
+
 
   // categorías únicas desde products.json
   const categories = [...new Set(products.map(p => p.category))]
