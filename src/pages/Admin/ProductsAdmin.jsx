@@ -171,6 +171,7 @@ export default function ProductsAdmin() {
                     name="price"
                     type="number"
                     min="0"
+                    step="1000"
                     className="form-control"
                     value={form.price}
                     onChange={onChange}
