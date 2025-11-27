@@ -1,4 +1,3 @@
-// src/pages/Admin/ProductsAdmin.jsx
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import {
@@ -18,14 +17,13 @@ const EMPTY_FORM = {
 }
 
 export default function ProductsAdmin() {
-  const { user } = useAuth() // usamos el token y el rol del usuario
+  const { user } = useAuth()
   const [list, setList] = useState([])
   const [form, setForm] = useState(EMPTY_FORM)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState(null)
 
-  // Cargar productos desde la API al montar
   useEffect(() => {
     const load = async () => {
       try {
@@ -39,7 +37,6 @@ export default function ProductsAdmin() {
         setLoading(false)
       }
     }
-
     load()
   }, [])
 
@@ -53,8 +50,8 @@ export default function ProductsAdmin() {
           : value,
     }))
   }
+const resetForm = () => setForm(EMPTY_FORM)
 
-  const resetForm = () => setForm(EMPTY_FORM)
 
   const onEdit = (producto) => {
     setForm({
@@ -103,18 +100,16 @@ export default function ProductsAdmin() {
       }
 
       if (!form.id) {
-        // Crear
         const created = await createProduct(payload, user.token)
         setList((prev) => [...prev, created])
       } else {
-        // Actualizar
         const updated = await updateProduct(form.id, payload, user.token)
         setList((prev) =>
           prev.map((p) => (p.id === updated.id ? updated : p))
         )
       }
 
-      resetForm()
+      setForm(EMPTY_FORM)
     } catch (err) {
       console.error(err)
       setError(err.message || 'Error guardando producto')
@@ -129,7 +124,9 @@ export default function ProductsAdmin() {
 
   return (
     <div className="container py-4">
-      <h2 className="mb-4 fw-bold">Administrar productos</h2>
+      <h2 className="mb-4 fw-bold">
+        ADMIN PRODUCTOS — VERSIÓN **CON BOTONES**
+      </h2>
 
       {error && <div className="alert alert-danger">{error}</div>}
 
@@ -217,7 +214,7 @@ export default function ProductsAdmin() {
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
-                      onClick={resetForm}
+                      onClick={() => setForm(EMPTY_FORM)}
                     >
                       Cancelar edición
                     </button>
@@ -238,10 +235,7 @@ export default function ProductsAdmin() {
               ) : (
                 <ul className="list-group">
                   {list.map((p) => (
-                    <li
-                      key={p.id}
-                      className="list-group-item d-flex justify-content-between align-items-center"
-                    >
+                    <li key={p.id} className="list-group-item">
                       <div>
                         <strong>{p.name}</strong> — $
                         {Number(p.price || 0).toLocaleString('es-CL')}
@@ -249,15 +243,41 @@ export default function ProductsAdmin() {
                           Stock: {p.stock ?? 0}
                         </div>
                       </div>
-                      <div className="d-flex gap-2">
+
+                      {/* BOTONES SIN .btn, CON ESTILO INLINE */}
+                      <div
+                        style={{
+                          marginTop: '8px',
+                          display: 'flex',
+                          gap: '8px',
+                        }}
+                      >
                         <button
-                          className="btn btn-sm btn-outline-primary"
+                          type="button"
+                          style={{
+                            padding: '4px 10px',
+                            borderRadius: '4px',
+                            border: '1px solid #0d6efd',
+                            backgroundColor: '#0d6efd',
+                            color: '#fff',
+                            fontSize: '0.8rem',
+                            cursor: 'pointer',
+                          }}
                           onClick={() => onEdit(p)}
                         >
                           Editar
                         </button>
                         <button
-                          className="btn btn-sm btn-outline-danger"
+                          type="button"
+                          style={{
+                            padding: '4px 10px',
+                            borderRadius: '4px',
+                            border: '1px solid #dc3545',
+                            backgroundColor: '#dc3545',
+                            color: '#fff',
+                            fontSize: '0.8rem',
+                            cursor: 'pointer',
+                          }}
                           onClick={() => onDelete(p.id)}
                         >
                           Eliminar
@@ -274,3 +294,5 @@ export default function ProductsAdmin() {
     </div>
   )
 }
+
+
